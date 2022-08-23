@@ -6,7 +6,12 @@ import { CircularProgress } from "@mui/material";
 import Categories from "./Categories";
 import Genre from "./Genre";
 
-const SideBar: React.FC = () => {
+interface Props{
+  show: boolean;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const SideBar = ({show, setToggle}: Props) => {
   const [genres, setGenres] = useState<genres[] | null>(null);
 
   useEffect(() => {
@@ -18,7 +23,7 @@ const SideBar: React.FC = () => {
           );
 
           setGenres(data.genres);
-        }, 1000);
+        }, 500);
       } catch (err) {
         console.log(err);
       }
@@ -27,7 +32,7 @@ const SideBar: React.FC = () => {
   }, []);
 
   return (
-    <div className="sidebar overflow-x-hidden hidden w-[16rem] mid:flex mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white">
+    <div className={`sidebar bg-white dark:bg-black absolute mid:relative mid:flex overflow-x-hidden ${show! ? '-translate-x-[100%]' : 'translate-x-0'} mid:translate-x-0 w-[16rem]  mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white z-50 duration-300`}>
       <img
         src={logo}
         alt="logo"
@@ -36,7 +41,7 @@ const SideBar: React.FC = () => {
       <hr className="w-[100%] bg-gray-700 my-2" />
 
       {/* categories */}
-      <Categories/>
+      <Categories show={show} setToggle={setToggle}/>
       <hr className="w-[100%] bg-gray-100" />
 
       {/* genres */}
@@ -46,7 +51,7 @@ const SideBar: React.FC = () => {
         </p>
         {genres ? (
           genres.map((genre: genres) => (
-              <Genre name={genre.name} id={genre.id}/>
+            <Genre key={genre.id} name={genre.name} id={genre.id} show={show} setToggle={setToggle}/>
           ))
         ) : (
           <div className="flex justify-center items-center h-[20vh]">

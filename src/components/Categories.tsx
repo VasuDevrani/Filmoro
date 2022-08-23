@@ -1,12 +1,22 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { BsFilm, BsStar, BsCameraReels } from "react-icons/bs";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Store } from "../Store";
 
-export default function Categories() {
+interface Props{
+  show: boolean;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Categories({show, setToggle}: Props) {
   const { dispatch } = useContext(Store);
+  const navigate: NavigateFunction = useNavigate();
 
   const handleClick = async (name: string) => {
+    setToggle(!show);
+    navigate('/');
+
     try {
       dispatch({ type: "START_ADD" });
       setTimeout(async () => {

@@ -27,7 +27,7 @@ export const Reducer = (state: ContextState, action: ContextActions) => {
     case "START_ADD":
       return { ...state, loading: true, error: false };
     case "ADD_MOVIES":
-      return { ...state, loading: false, movies: action.payload };
+      return { ...state, loading: false, movies: action.payload, error: false };
     case "FAIL_ADD":
       return { ...state, loading: false, error: true };
   }
