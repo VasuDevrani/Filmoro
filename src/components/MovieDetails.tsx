@@ -77,7 +77,7 @@ export default function MovieDetails() {
   }));
 
   const Video = styled("iframe")(() => ({
-    width: "50%",
+    width: "90%",
     height: "50%",
   }));
 
@@ -86,8 +86,8 @@ export default function MovieDetails() {
       {load ? (
         <Loading />
       ) : (
-        <div key={id} className="details flex flex-col p-10 sm:px-16 px-10 ">
-          <div className="top flex flex-col gap-10 mid:flex-row justify-between items-start">
+        <div key={id} className="details flex flex-col py-10 px-4">
+          <div className="top flex flex-col gap-10 mid:flex-row justify-between items-center mid:items-start">
             <img
               src={
                 movieData?.poster_path
@@ -95,18 +95,18 @@ export default function MovieDetails() {
                   : "https://dummyimage.com/200x300/fff/aaa"
               }
               alt="movie image"
-              className="w-[35%] rounded-[50px] drop-shadow-4xl contrast-125"
+              className="w-[70%] mid:w-[40%] md:rounded-[50px] rounded-[30px] drop-shadow-4xl contrast-125"
             />
             {/* info */}
-            <div className="dark:text-white info text-center font-roboto px-10">
-              <h1 className="text-5xl font-semibold my-4 leading-tight">
+            <div className="dark:text-white info text-center font-roboto px-4">
+              <h1 className="xl:text-5xl text-4xl font-semibold my-4 leading-tight">
                 {movieData?.title} ({movieData?.release_date.slice(0, 4)})
               </h1>
-              <p className="text-3xl my-3">{movieData?.tagline}</p>
+              <p className="xl:text-3xl text-xl my-3">{movieData?.tagline}</p>
               <p className="text-2xl my-2">
                 {movieData?.runtime} min / {movieData?.original_language}
               </p>
-              <div className="genre flex flex-row flex-wrap items-center justify-center gap-10 text-xl cursor-pointer">
+              <div className="genre flex flex-row flex-wrap items-center justify-center mt-8 gap-3 text-xl cursor-pointer">
                 {movieData?.genres.map((genre) => (
                   <h6 key={genre.id} onClick={() => handleClick(genre.id)}>
                     {genre.name}
@@ -143,7 +143,7 @@ export default function MovieDetails() {
                   ))}
                 </div>
               </div>
-              <div className="btn-grp1 flex m-10 flex-row flex-wrap">
+              <div className="btn-grp1 flex my-10 mx-3 flex-row flex-wrap">
                 <div className="util-btn">
                   WEBSITE <BsGlobe />
                 </div>
@@ -154,12 +154,12 @@ export default function MovieDetails() {
                   TRAILER <MdLocalMovies />
                 </div>
               </div>
-              <div className="btn-grp2 flex m-10 flex-row flex-wrap">
+              <div className="btn-grp2 flex my-10 mx-3 flex-row flex-wrap">
                 <div className="util-btn">
                   FAVOURITE <BsHeartFill />
                 </div>
                 <div className="util-btn">WATCHLIST</div>
-                <div className="util-btn" onClick={() => navigate("/")}>
+                <div className="util-btn" onClick={() => navigate(-1)}>
                   BACK <BsArrowLeft />
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function MovieDetails() {
             type={
               movieData?.genres[
                 Math.floor(Math.random() * movieData?.genres.length)
-              ].name
+              ]?.name
             }
           />
         </div>

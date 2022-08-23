@@ -36,7 +36,7 @@ export default function Genre({ name, id, show, setToggle }: Props) {
   return (
     <div
       key={id}
-      className="flex flex-row items-center gap-4 py-3 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-5 cursor-pointer"
+      className="flex flex-row items-center gap-4 py-3 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-5 sm:px-12 mid:px-5 cursor-pointer"
       onClick={() => handleClick(id)}
     >
       <img

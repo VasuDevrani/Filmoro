@@ -46,7 +46,6 @@ const getMovies = async (
     dispatch({ type: "START_ADD" });
     setTimeout(async () => {
       const { results } = await getPopularMovies(query);
-
       dispatch({ type: "ADD_MOVIES", payload: results });
     }, 500);
   } catch (err) {

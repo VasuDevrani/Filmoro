@@ -32,7 +32,7 @@ const SideBar = ({show, setToggle}: Props) => {
   }, []);
 
   return (
-    <div className={`sidebar bg-white dark:bg-black absolute mid:relative mid:flex overflow-x-hidden ${show! ? '-translate-x-[100%]' : 'translate-x-0'} mid:translate-x-0 w-[16rem]  mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white z-50 duration-300`}>
+    <div className={`sidebar bg-white dark:bg-black absolute mid:relative mid:flex overflow-x-hidden ${show ? 'translate-x-0' : '-translate-x-[100%]'} mid:translate-x-0 w-[14rem] sm:w-[20rem] mid:w-[17rem]  mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white z-[100] duration-300`}>
       <img
         src={logo}
         alt="logo"
@@ -46,7 +46,7 @@ const SideBar = ({show, setToggle}: Props) => {
 
       {/* genres */}
       <div className="genres text-[1.1rem]">
-        <p className=" text-gray-500 text-sm py-3 sticky top-0 bg-white dark:bg-black z-40 px-5">
+        <p className=" text-gray-500 text-sm py-3 sticky top-0 bg-white dark:bg-black z-40 px-5 sm:px-12 mid:px-5">
           Genres
         </p>
         {genres ? (

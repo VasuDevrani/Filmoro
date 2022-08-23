@@ -11,7 +11,7 @@ module.exports = {
           '11': 'repeat(auto-fill, minmax(110px, 1fr))'
       },
       screens: {
-        mid: '900px'
+        mid: '970px'
       },
       colors: {
         "sitePink": "rgb(156, 39, 176)",
