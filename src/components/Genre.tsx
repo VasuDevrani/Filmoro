@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import icons from "../assets/index";
 import { Store } from "../Store";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Genre({ name, id, show, setToggle }: Props) {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const navigate = useNavigate();
 
   const handleClick = async (genre: number) => {
@@ -23,7 +23,7 @@ export default function Genre({ name, id, show, setToggle }: Props) {
       dispatch({ type: "START_ADD" });
       setTimeout(async () => {
         const { data } = await axios.get(
-          `https://api.themoviedb.org/3/discover/movie?api_key=9927d57067753126d627ab0540ed625a&with_genres=${genre}`
+          `https://api.themoviedb.org/3/discover/movie?api_key=9927d57067753126d627ab0540ed625a&with_genres=${genre}&page=1`
         );
         dispatch({ type: "ADD_MOVIES", payload: data.results });
       }, 500);

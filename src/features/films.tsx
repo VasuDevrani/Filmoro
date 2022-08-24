@@ -1,11 +1,11 @@
 import axios from "axios";
 import { ContextActions } from "../Store";
 
-const getPopularMovies = async (query: string) => {
+const getPopularMovies = async (query: string, page: number = 1) => {
   const { data } = await axios.get(
     query.length > 0
-      ? `https://api.themoviedb.org/3/search/movie?api_key=9927d57067753126d627ab0540ed625a&query=${query}`
-      : `https://api.themoviedb.org/3/movie/popular?api_key=9927d57067753126d627ab0540ed625a&language=en-US`
+      ? `https://api.themoviedb.org/3/search/movie?api_key=9927d57067753126d627ab0540ed625a&query=${query}&page=${page}`
+      : `https://api.themoviedb.org/3/movie/popular?api_key=9927d57067753126d627ab0540ed625a&language=en-US&page=${page}`
   );
   return data;
 };
@@ -40,12 +40,13 @@ const getPersonMovies = async(id: string) => {
 
 const getMovies = async (
   dispatch: React.Dispatch<ContextActions>,
-  query: string = ""
+  query: string = "",
+  page: number = 1
 ) => {
   try {
     dispatch({ type: "START_ADD" });
     setTimeout(async () => {
-      const { results } = await getPopularMovies(query);
+      const { results } = await getPopularMovies(query, page);
       dispatch({ type: "ADD_MOVIES", payload: results });
     }, 500);
   } catch (err) {

@@ -21,5 +21,5 @@
 }
 
 .util-btn{
-  @apply text-sitePink p-3 border cursor-pointer border-purple-400 hover:border-purple-800 flex items-center gap-2 text-lg
+  @apply text-sitePink p-3 px-4 border cursor-pointer border-purple-400 hover:border-purple-800 flex items-center gap-2 text-lg
 }

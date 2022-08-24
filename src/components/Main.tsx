@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import React, { useContext, useRef, useState } from "react";
-// import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,7 +15,7 @@ import Loading from "./Loading";
 
 const Main: React.FC = () => {
   const { state, dispatch } = useContext(Store);
-  const { loading, error } = state;
+  const { loading, error, darkMode } = state;
   const navigate = useNavigate();
   const search = useRef<HTMLInputElement | null>(null);
 
@@ -38,7 +38,7 @@ const Main: React.FC = () => {
   };
 
   const handleClick = () => {
-    document.querySelector("#root")?.classList.toggle("dark");
+    dispatch({type: 'CHANGE_MODE'});
   };
 
   return (
@@ -53,7 +53,7 @@ const Main: React.FC = () => {
               color="inherit"
               onClick={handleClick}
             >
-              <Brightness7Icon />
+              {!darkMode ? <Brightness7Icon /> : <Brightness4Icon/>}
             </IconButton>
           </div>
           <div className="search flex">

@@ -5,12 +5,14 @@ type ContextState = {
   movies: movie[];
   loading: boolean;
   error: boolean;
+  darkMode: boolean;
 };
 
 const initalState = {
   movies: [],
   loading: true,
   error: false,
+  darkMode: false,
 };
 
 export const Store = createContext(
@@ -20,7 +22,8 @@ export const Store = createContext(
 export type ContextActions =
   | { type: "START_ADD" }
   | { type: "ADD_MOVIES"; payload: movie[] }
-  | { type: "FAIL_ADD" };
+  | { type: "FAIL_ADD" }
+  | { type: "CHANGE_MODE" }
 
 export const Reducer = (state: ContextState, action: ContextActions) => {
   switch (action.type) {
@@ -30,6 +33,10 @@ export const Reducer = (state: ContextState, action: ContextActions) => {
       return { ...state, loading: false, movies: action.payload, error: false };
     case "FAIL_ADD":
       return { ...state, loading: false, error: true };
+    case "CHANGE_MODE":
+      return { ...state, darkMode: !state.darkMode };
+    default:
+      return state;
   }
 };
 
