@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap");
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -20,6 +21,6 @@
   background: rgb(142, 141, 141);
 }
 
-.util-btn{
-  @apply text-sitePink p-3 px-4 border cursor-pointer border-purple-400 hover:border-purple-800 flex items-center gap-2 text-lg
+.util-btn {
+  @apply text-sitePink p-3 px-4 border cursor-pointer border-purple-400 hover:border-purple-800 flex items-center gap-2 text-lg;
 }

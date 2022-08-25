@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import axios from "axios";
 import { genres } from "../interfaces/movie";
 import { CircularProgress } from "@mui/material";
 import Categories from "./Categories";
 import Genre from "./Genre";
+import { getMovies } from "../features/films";
+import { Store } from "../Store";
+import { useNavigate } from "react-router-dom";
 
-interface Props{
+interface Props {
   show: boolean;
-  setToggle: React.Dispatch<React.SetStateAction<boolean>>
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = ({show, setToggle}: Props) => {
+const SideBar = ({ show, setToggle }: Props) => {
+  const { dispatch } = useContext(Store);
   const [genres, setGenres] = useState<genres[] | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getGenres = async () => {
@@ -32,16 +38,21 @@ const SideBar = ({show, setToggle}: Props) => {
   }, []);
 
   return (
-    <div className={`sidebar bg-white dark:bg-black absolute mid:relative mid:flex overflow-x-hidden ${show ? 'translate-x-0' : '-translate-x-[100%]'} mid:translate-x-0 w-[14rem] sm:w-[20rem] mid:w-[17rem]  mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white z-[100] duration-300`}>
-      <img
-        src={logo}
-        alt="logo"
-        className="w-3/5 py-5 pb-3 mx-auto -hue-rotate-60 dark:hue-rotate-0  cursor-pointer"
-      />
+    <div
+      className={`sidebar bg-white dark:bg-black absolute mid:relative mid:flex overflow-x-hidden ${
+        show ? "translate-x-0" : "-translate-x-[100%]"
+      } mid:translate-x-0 w-[14rem] sm:w-[20rem] mid:w-[17rem]  mid:flex-col h-[100vh] dark:bg-black overflow-scroll font-roboto dark:text-white z-[100] duration-300`}
+    >
+      <h1
+        className="py-5 pb-3 text-center cursor-pointer font-bold text-sitePink text-3xl sm:text-4xl  font-logo"
+        onClick={() => {getMovies(dispatch); navigate('/'); setToggle(!show)}}
+      >
+        FILMORO
+      </h1>
       <hr className="w-[100%] bg-gray-700 my-2" />
 
       {/* categories */}
-      <Categories show={show} setToggle={setToggle}/>
+      <Categories show={show} setToggle={setToggle} />
       <hr className="w-[100%] bg-gray-100" />
 
       {/* genres */}
@@ -51,7 +62,13 @@ const SideBar = ({show, setToggle}: Props) => {
         </p>
         {genres ? (
           genres.map((genre: genres) => (
-            <Genre key={genre.id} name={genre.name} id={genre.id} show={show} setToggle={setToggle}/>
+            <Genre
+              key={genre.id}
+              name={genre.name}
+              id={genre.id}
+              show={show}
+              setToggle={setToggle}
+            />
           ))
         ) : (
           <div className="flex justify-center items-center h-[20vh]">

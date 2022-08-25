@@ -1,39 +1,49 @@
 import axios from "axios";
 import { ContextActions } from "../Store";
 
-const getPopularMovies = async (query: string, page: number = 1) => {
-  const { data } = await axios.get(
-    query.length > 0
-      ? `https://api.themoviedb.org/3/search/movie?api_key=9927d57067753126d627ab0540ed625a&query=${query}&page=${page}`
-      : `https://api.themoviedb.org/3/movie/popular?api_key=9927d57067753126d627ab0540ed625a&language=en-US&page=${page}`
-  );
+let base = 'https://api.themoviedb.org/3'
+
+const getPopularMovies = async (query: string = "", page: number = 1, id: string = "", category: string = "" ) => {
+  let URL: string;
+  if(query.length > 0)
+  {
+    URL = `${base}/search/movie?api_key=9927d57067753126d627ab0540ed625a&query=${query}&page=${page}`;
+  }else if (id.length > 0){
+    URL = `${base}/discover/movie?api_key=9927d57067753126d627ab0540ed625a&with_genres=${id}&page=${page}`
+  }else if(category.length > 0){
+    URL = `${base}/movie/${category}?api_key=9927d57067753126d627ab0540ed625a&language=en-US&page=${page}`
+  }
+  else{
+    URL = `${base}/movie/popular?api_key=9927d57067753126d627ab0540ed625a&language=en-US&page=${page}`;
+  }
+  const { data } = await axios.get(URL);
   return data;
 };
 
 const getMovieDetails = async (id: string) => {
   const { data } = await axios.get(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=9927d57067753126d627ab0540ed625a&append_to_response=videos`
+    `${base}/movie/${id}?api_key=9927d57067753126d627ab0540ed625a&append_to_response=videos`
   );
   return data;
 };
 
 const getCastData = async (id: string) => {
   const { data } = await axios.get(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=9927d57067753126d627ab0540ed625a&append_to_response=credits`
+    `${base}/movie/${id}?api_key=9927d57067753126d627ab0540ed625a&append_to_response=credits`
   );
   return data;
 };
 
 const getPerson = async (id: string) => {
   const { data } = await axios.get(
-    `https://api.themoviedb.org/3/person/${id}?api_key=9927d57067753126d627ab0540ed625a&language=en-US&append_to_response=movies`
+    `${base}/person/${id}?api_key=9927d57067753126d627ab0540ed625a&language=en-US&append_to_response=movies`
   );
   return data;
 };
 
 const getPersonMovies = async(id: string) => {
   const { data } = await axios.get(
-    `https://api.themoviedb.org/3/discover/movie?with_cast=${id}&api_key=9927d57067753126d627ab0540ed625a`
+    `${base}/discover/movie?with_cast=${id}&api_key=9927d57067753126d627ab0540ed625a`
   );
   return data.results;
 }
@@ -41,14 +51,16 @@ const getPersonMovies = async(id: string) => {
 const getMovies = async (
   dispatch: React.Dispatch<ContextActions>,
   query: string = "",
-  page: number = 1
+  page: number = 1,
+  id: string = "",
+  category: string = ""
 ) => {
   try {
     dispatch({ type: "START_ADD" });
     setTimeout(async () => {
-      const { results } = await getPopularMovies(query, page);
+      const { results } = await getPopularMovies(query, page, id, category);
       dispatch({ type: "ADD_MOVIES", payload: results });
-    }, 500);
+    }, 200);
   } catch (err) {
     dispatch({ type: "FAIL_ADD" });
     console.log(err);
@@ -57,7 +69,7 @@ const getMovies = async (
 
 export { getPopularMovies, getMovies, getMovieDetails, getCastData, getPerson, getPersonMovies };
 
-// https://api.themoviedb.org/3/discover/movie?with_cast=2511949&api_key=9927d57067753126d627ab0540ed625a&language=en-US&sort_by=popularity.desc  cast movies
-// https://api.themoviedb.org/3/person/56322?api_key=9927d57067753126d627ab0540ed625a&language=en-US  cast details
-// https://api.themoviedb.org/3/movie/150540?api_key=9927d57067753126d627ab0540ed625a&append_to_response=credits   cast and credits
-// https://api.themoviedb.org/3/movie/150540?api_key=9927d57067753126d627ab0540ed625a   movie details
+// ${base}/discover/movie?with_cast=2511949&api_key=9927d57067753126d627ab0540ed625a&language=en-US&sort_by=popularity.desc  cast movies
+// ${base}/person/56322?api_key=9927d57067753126d627ab0540ed625a&language=en-US  cast details
+// ${base}/movie/150540?api_key=9927d57067753126d627ab0540ed625a&append_to_response=credits   cast and credits
+// ${base}/movie/150540?api_key=9927d57067753126d627ab0540ed625a   movie details

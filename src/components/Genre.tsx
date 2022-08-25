@@ -12,25 +12,14 @@ type Props = {
 };
 
 export default function Genre({ name, id, show, setToggle }: Props) {
-  const { state, dispatch } = useContext(Store);
+  const { dispatch } = useContext(Store);
   const navigate = useNavigate();
 
   const handleClick = async (genre: number) => {
     setToggle(!show);
     navigate("/");
 
-    try {
-      dispatch({ type: "START_ADD" });
-      setTimeout(async () => {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/discover/movie?api_key=9927d57067753126d627ab0540ed625a&with_genres=${genre}&page=1`
-        );
-        dispatch({ type: "ADD_MOVIES", payload: data.results });
-      }, 500);
-    } catch (err) {
-      dispatch({ type: "FAIL_ADD" });
-      console.log(err);
-    }
+    dispatch({type: "GET_GENRE_MOVIE", payload: genre.toString()});
   };
 
   return (

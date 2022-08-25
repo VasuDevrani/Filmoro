@@ -6,21 +6,24 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import SearchIcon from "@mui/icons-material/Search";
 import { Store } from "../Store";
 import { getMovies } from "../features/films";
-import SideBar from "./Sidebar";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Cast from "./Cast";
 import MovieDetails from "./MovieDetails";
 import MovieList from "./MovieList";
 import Loading from "./Loading";
 
-const Main: React.FC = () => {
+interface Props{
+  show: boolean;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function Main({show, setToggle}: Props){
   const { state, dispatch } = useContext(Store);
   const { loading, error, darkMode } = state;
   const navigate = useNavigate();
   const search = useRef<HTMLInputElement | null>(null);
 
   const [query, setQuery] = useState<string>("");
-  const [toggle, setToggle] = useState<boolean>(false);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     e.preventDefault();
@@ -31,7 +34,7 @@ const Main: React.FC = () => {
   };
 
   const handleDispatch = () => {
-    getMovies(dispatch, query);
+    dispatch({type: "QUERY", payload: query})
     search.current?.blur();
     navigate("/");
     setQuery("");
@@ -42,9 +45,8 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div className="relative mid:flex">
-      <SideBar show={toggle} setToggle={setToggle} />
-      <div className="main mid:flex-1 h-[100vh] overflow-scroll font-roboto">
+    <div className="flex-1">
+      <div className="main mid:flex-1 h-[100vh] overflow-scroll overflow-x-hidden font-roboto">
         {/* navbar */}
         <div className="navbar sticky top-0 z-50 flex flex-row justify-between items-center p-5 bg-sitePink dark:bg-siteGrey">
           <div className="text-white text-2xl">
@@ -71,7 +73,7 @@ const Main: React.FC = () => {
             <div className="mid:hidden">
               <IconButton
                 sx={{ ml: 1, color: "white" }}
-                onClick={() => setToggle(!toggle)}
+                onClick={() => setToggle(!show)}
               >
                 <MenuIcon />
               </IconButton>

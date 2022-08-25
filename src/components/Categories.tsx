@@ -16,19 +16,7 @@ export default function Categories({show, setToggle}: Props) {
   const handleClick = async (name: string) => {
     setToggle(!show);
     navigate('/');
-
-    try {
-      dispatch({ type: "START_ADD" });
-      setTimeout(async () => {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/movie/${name}?api_key=9927d57067753126d627ab0540ed625a&language=en-US`
-        );
-        dispatch({ type: "ADD_MOVIES", payload: data.results });
-      }, 1000);
-    } catch (err) {
-      dispatch({ type: "FAIL_ADD" });
-      console.log(err);
-    }
+    dispatch({type: "GET_CATEGORY", payload: name})
   };
 
   return (

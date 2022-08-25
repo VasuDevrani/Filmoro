@@ -77,8 +77,8 @@ export default function MovieDetails() {
   }));
 
   const Video = styled("iframe")(() => ({
-    width: "90%",
-    height: "50%",
+    width: "80%",
+    height: "70%",
   }));
 
   return (
