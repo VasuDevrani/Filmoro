@@ -1,4 +1,4 @@
-### FILMORO - Movie App🍿 </br>
+### 🍿 FILMORO - Movie App🍿 </br>
 
 🎥 [LIVE](https://filmoro-20491.web.app/) </br>
 Have a look at this awesome web application Filmoro, created to find movies on the go. </br>
